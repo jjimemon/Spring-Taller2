@@ -93,6 +93,7 @@ public class NttDataSpringMain implements CommandLineRunner {
 
 		// Llamada a los servicios.
 		orderService.insertNewOrder(order1);
+		orderService.insertNewOrder(order2);
 		productService.insertNewProduct(product1);
 		productService.insertNewProduct(product2);
 

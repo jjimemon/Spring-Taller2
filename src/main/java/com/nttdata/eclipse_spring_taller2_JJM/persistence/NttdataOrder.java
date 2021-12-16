@@ -106,7 +106,7 @@ public class NttdataOrder implements Serializable {
 		this.identifier = identifier;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
+	@OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "order", orphanRemoval = true)
 	public List<NttdataProduct> getProductList() {
 		return productList;
 	}

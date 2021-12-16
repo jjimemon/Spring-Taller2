@@ -2,6 +2,7 @@ package com.nttdata.eclipse_spring_taller2_JJM.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nttdata.eclipse_spring_taller2_JJM.persistence.NttdataProduct;
-import com.nttdata.eclipse_spring_taller2_JJM.persistence.NttdataProductDaoI;
+import com.nttdata.eclipse_spring_taller2_JJM.persistence.NttdataProductRepositoryI;
 
 /**
  * Proyecto Spring taller 2.
@@ -24,7 +25,7 @@ import com.nttdata.eclipse_spring_taller2_JJM.persistence.NttdataProductDaoI;
 public class NttdataProductManagementServiceImpl implements NttdataProductManagementServiceI {
 
 	@Autowired
-	private NttdataProductDaoI daoProduct;
+	private NttdataProductRepositoryI daoProduct;
 
 	@Override
 	@Transactional
@@ -34,20 +35,9 @@ public class NttdataProductManagementServiceImpl implements NttdataProductManage
 		if (newProduct != null && newProduct.getIdProduct() == null) {
 
 			// Insercción del nuevo producto.
-			daoProduct.insert(newProduct);
+			daoProduct.save(newProduct);
 		}
 
-	}
-
-	@Override
-	@Transactional
-	public void updatedProduct(NttdataProduct Product) {
-		// Verificación de nulidad e inexistencia.
-		if (Product != null && Product.getIdProduct() != null) {
-
-			// Actulización del producto.
-			daoProduct.update(Product);
-		}
 	}
 
 	@Override
@@ -63,15 +53,15 @@ public class NttdataProductManagementServiceImpl implements NttdataProductManage
 
 	@Override
 	@Transactional
-	public NttdataProduct searchById(Integer IDProduct) {
+	public Optional<NttdataProduct> findById(Integer IDProduct) {
 		// Resultado.
-		NttdataProduct product = null;
+		Optional<NttdataProduct> product = null;
 
 		// Verificación de nulidad.
 		if (IDProduct != null) {
 
 			// Obtención del producto por ID.
-			product = daoProduct.searchById(IDProduct);
+			product = daoProduct.findById(IDProduct);
 		}
 
 		return product;
@@ -79,12 +69,12 @@ public class NttdataProductManagementServiceImpl implements NttdataProductManage
 
 	@Override
 	@Transactional
-	public List<NttdataProduct> searchAll() {
+	public List<NttdataProduct> findAll() {
 		// Resultado.
 		List<NttdataProduct> productList = new ArrayList<NttdataProduct>();
 
 		// Obtención del edificio.
-		productList = daoProduct.searchAll();
+		productList = daoProduct.findAll();
 
 		return productList;
 	}

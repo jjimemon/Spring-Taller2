@@ -2,13 +2,14 @@ package com.nttdata.eclipse_spring_taller2_JJM.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.nttdata.eclipse_spring_taller2_JJM.persistence.NttdataOrder;
-import com.nttdata.eclipse_spring_taller2_JJM.persistence.NttdataOrderDaoI;
+import com.nttdata.eclipse_spring_taller2_JJM.persistence.NttdataOrderRepositoryI;
 
 /**
  * Proyecto Spring taller 2.
@@ -23,7 +24,7 @@ import com.nttdata.eclipse_spring_taller2_JJM.persistence.NttdataOrderDaoI;
 public class NttdataOrderManagementServiceImpl implements NttdataOrderManagementServiceI {
 
 	@Autowired
-	private NttdataOrderDaoI daoOrder;
+	private NttdataOrderRepositoryI daoOrder;
 
 	@Override
 	@Transactional
@@ -32,19 +33,7 @@ public class NttdataOrderManagementServiceImpl implements NttdataOrderManagement
 		if (newOrder != null && newOrder.getIdOrder() == null) {
 
 			// Insercción del nuevo cliente.
-			daoOrder.insert(newOrder);
-		}
-
-	}
-
-	@Override
-	@Transactional
-	public void updatedOrder(NttdataOrder updatedOrder) {
-		// Verificación de nulidad y existencia.
-		if (updatedOrder != null && updatedOrder.getIdOrder() != null) {
-
-			// Actualización del pedido.
-			daoOrder.update(updatedOrder);
+			daoOrder.save(newOrder);
 		}
 
 	}
@@ -63,15 +52,15 @@ public class NttdataOrderManagementServiceImpl implements NttdataOrderManagement
 
 	@Override
 	@Transactional
-	public NttdataOrder searchById(Integer IDOrder) {
+	public Optional<NttdataOrder> findById(Integer IDOrder) {
 		// Resultado.
-		NttdataOrder edifice = null;
+		Optional<NttdataOrder> edifice = null;
 
 		// Verificación de nulidad.
 		if (IDOrder != null) {
 
 			// Obtención del edificio por ID.
-			edifice = daoOrder.searchById(IDOrder);
+			edifice = daoOrder.findById(IDOrder);
 		}
 
 		return edifice;
@@ -79,12 +68,12 @@ public class NttdataOrderManagementServiceImpl implements NttdataOrderManagement
 
 	@Override
 	@Transactional
-	public List<NttdataOrder> searchAll() {
+	public List<NttdataOrder> findAll() {
 		// Resultado.
 		List<NttdataOrder> edificeList = new ArrayList<NttdataOrder>();
 
 		// Obtención del edificio.
-		edificeList = daoOrder.searchAll();
+		edificeList = daoOrder.findAll();
 
 		return edificeList;
 	}

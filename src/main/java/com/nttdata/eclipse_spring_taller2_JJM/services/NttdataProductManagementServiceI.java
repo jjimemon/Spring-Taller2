@@ -1,6 +1,7 @@
 package com.nttdata.eclipse_spring_taller2_JJM.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.nttdata.eclipse_spring_taller2_JJM.persistence.NttdataProduct;
 
@@ -11,13 +12,6 @@ public interface NttdataProductManagementServiceI {
 	 * @param newProduct
 	 */
 	public void insertNewProduct(final NttdataProduct newProduct);
-
-	/**
-	 * Actualiza un producto.
-	 * 
-	 * @param Product
-	 */
-	public void updatedProduct(final NttdataProduct Product);
 
 	/**
 	 * Elimina un producto existente.
@@ -31,12 +25,12 @@ public interface NttdataProductManagementServiceI {
 	 * 
 	 * @param IDProduct
 	 */
-	public NttdataProduct searchById(final Integer IDProduct);
+	public Optional<NttdataProduct> findById(final Integer IDProduct);
 
 	/**
 	 * Obtiene todos los productos existentes.
 	 * 
 	 * @return List<NttdataProduct>
 	 */
-	public List<NttdataProduct> searchAll();
+	public List<NttdataProduct> findAll();
 }
